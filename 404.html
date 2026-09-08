@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Laura &amp; Nick | August 8, 2027 | The Carpicos</title>
-<meta name="description" content="Laura and Nick are getting married on Sunday, August 8, 2027 at Paradise Banquet &amp; Convention Centre in Concord, Ontario. Find the details, Q&amp;A, and RSVP.">
+<title>Nick &amp; Laura | August 8, 2027 | The Carpicos</title>
+<meta name="description" content="Nick and Laura are getting married on Sunday, August 8, 2027 at Paradise Banquet &amp; Convention Centre in Concord, Ontario. Find the details, Q&amp;A, and RSVP.">
 <link rel="canonical" href="https://thecarpicos.com/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Laura &amp; Nick | August 8, 2027">
+<meta property="og:title" content="Nick &amp; Laura | August 8, 2027">
 <meta property="og:description" content="We're getting married! Details, Q&amp;A, and RSVP for our wedding in Concord, Ontario.">
 <meta property="og:url" content="https://thecarpicos.com/">
 <meta property="og:image" content="https://thecarpicos.com/og.jpg">
@@ -17,9 +17,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css?v=5">
+<link rel="stylesheet" href="/styles.css?v=7">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Event","name":"Laura & Nick's Wedding","startDate":"2027-08-08T16:00:00-04:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"Paradise Banquet & Convention Centre","address":{"@type":"PostalAddress","streetAddress":"7601 Jane Street","addressLocality":"Concord","addressRegion":"ON","postalCode":"L4K 1X2","addressCountry":"CA"}},"url":"https://thecarpicos.com/"}
+{"@context":"https://schema.org","@type":"Event","name":"Nick & Laura's Wedding","startDate":"2027-08-08T17:00:00-04:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"Paradise Banquet & Convention Centre","address":{"@type":"PostalAddress","streetAddress":"7601 Jane Street","addressLocality":"Concord","addressRegion":"ON","postalCode":"L4K 1X2","addressCountry":"CA"}},"url":"https://thecarpicos.com/"}
 </script>
 </head>
 <body>
@@ -27,27 +27,27 @@
 <a class="skip" href="#day">Skip to content</a>
 
 <nav class="nav" id="nav" aria-label="Site">
-  <a class="nav__brand" href="#welcome" aria-label="Laura and Nick, back to top">L <span>&amp;</span> N</a>
+  <a class="nav__brand" href="#welcome" aria-label="Nick and Laura, back to top">N <span>&amp;</span> L</a>
   <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
   <ul class="nav__links" id="navLinks">
     <li><a href="#welcome">Welcome</a></li>
     <li><a href="#day">The Day</a></li>
-    <li><a href="#faq">Q&amp;A</a></li>
     <li><a class="nav__cta" href="#rsvp">RSVP</a></li>
+    <li><a href="#faq">Q&amp;A</a></li>
   </ul>
 </nav>
 
 <header class="hero" id="welcome">
   <div class="hero__inner">
     <p class="eyebrow">Together with their families</p>
-    <h1 class="hero__names">Laura <span class="amp">&amp;</span> Nick</h1>
+    <h1 class="hero__names">Nick <span class="amp">&amp;</span> Laura</h1>
     <p class="hero__sub">are getting married</p>
     <div class="hero__rule" aria-hidden="true"><span></span><i>8 . 8 . 2027</i><span></span></div>
     <p class="hero__date">Sunday, August 8, 2027</p>
     <p class="hero__venue">Paradise Banquet &amp; Convention Centre <br class="br-sm">Concord, Ontario</p>
-    <div class="countdown" id="countdown" aria-live="polite">
+    <div class="countdown" id="countdown">
       <div><b data-cd="days">–</b><span>days</span></div>
       <div><b data-cd="hours">–</b><span>hours</span></div>
       <div><b data-cd="minutes">–</b><span>minutes</span></div>
@@ -103,7 +103,85 @@
   </div>
 </section>
 
-<section class="section section--ivory" id="faq">
+<section class="section section--ivory" id="rsvp">
+  <div class="container container--narrow">
+    <div class="section__head center">
+      <p class="eyebrow">RSVP</p>
+      <h2>Will you join us?</h2>
+      <p class="lead">Kindly reply by July 15, 2027. One reply per household is perfect, just list everyone attending from your invitation.</p>
+    </div>
+
+    <form class="rsvp" id="rsvpForm" novalidate>
+      <div class="field">
+        <label for="name">Your full name <span class="req">*</span></label>
+        <input id="name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder="First and last name">
+        <small class="err" data-err="name"></small>
+      </div>
+      <div class="field">
+        <label for="email">Email address <span class="req">*</span></label>
+        <input id="email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="you@example.com">
+        <small class="err" data-err="email"></small>
+      </div>
+
+      <fieldset class="field field--choice">
+        <legend>Will you be attending? <span class="req">*</span></legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="attending" value="yes"><span><b>Joyfully accepts</b><em>See you on the dance floor</em></span></label>
+          <label class="choice"><input type="radio" name="attending" value="no"><span><b>Regretfully declines</b><em>We will miss you</em></span></label>
+        </div>
+        <small class="err" data-err="attending"></small>
+      </fieldset>
+
+      <div class="attending-only" id="attendingOnly">
+        <div class="field field--narrow">
+          <label for="extra">Additional guests coming with you</label>
+          <select id="extra" name="extra">
+            <option value="0">Just me</option>
+            <option value="1">1 guest</option>
+            <option value="2">2 guests</option>
+            <option value="3">3 guests</option>
+            <option value="4">4 guests</option>
+          </select>
+          <small class="hint">Do not count yourself. Plus ones are by invitation only.</small>
+        </div>
+        <div class="guest-names" id="guestNames" hidden></div>
+        <div class="field">
+          <label for="dietary">Dietary restrictions or allergies</label>
+          <textarea id="dietary" name="dietary" rows="2" maxlength="600" placeholder="Vegetarian, gluten free, nut allergy, etc."></textarea>
+        </div>
+        <div class="field">
+          <label for="song">A song that will get you dancing</label>
+          <input id="song" name="song" type="text" maxlength="200" placeholder="Song and artist">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="message">A note for Nick and Laura</label>
+        <textarea id="message" name="message" rows="3" maxlength="1200" placeholder="Optional"></textarea>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="rsvp__actions">
+        <button class="btn btn--primary btn--lg" type="submit" id="rsvpSubmit">Send RSVP</button>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </div>
+      <p class="muted small rsvp__fallback">Trouble with the form? <a id="rsvpFallback" href="#rsvp" target="_blank" rel="noopener">Open the backup RSVP form</a>.</p>
+    </form>
+
+    <div class="rsvp-done" id="rsvpDone" hidden>
+      <div class="rsvp-done__icon" aria-hidden="true">&#10047;</div>
+      <h3 id="doneTitle">Thank you!</h3>
+      <p id="doneText"></p>
+      <p class="muted small">Need to change something? Just send a new reply with the same name and we will use the latest one.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--blush" id="faq">
   <div class="container container--narrow">
     <div class="section__head">
       <p class="eyebrow">Q&amp;A</p>
@@ -147,96 +225,15 @@
   </div>
 </section>
 
-<section class="section section--blush" id="rsvp">
-  <div class="container container--narrow">
-    <div class="section__head center">
-      <p class="eyebrow">RSVP</p>
-      <h2>Will you join us?</h2>
-      <p class="lead">Kindly reply by July 15, 2027. One reply per household is perfect, just list everyone attending from your invitation.</p>
-    </div>
-
-    <form class="rsvp" id="rsvpForm" novalidate>
-      <div class="field">
-        <label for="name">Your full name <span class="req">*</span></label>
-        <input id="name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder="First and last name">
-        <small class="err" data-err="name"></small>
-      </div>
-      <div class="field">
-        <label for="email">Email address <span class="req">*</span></label>
-        <input id="email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="you@example.com">
-        <small class="err" data-err="email"></small>
-      </div>
-
-      <fieldset class="field field--choice">
-        <legend>Will you be attending? <span class="req">*</span></legend>
-        <div class="choices">
-          <label class="choice"><input type="radio" name="attending" value="yes"><span><b>Joyfully accepts</b><em>See you on the dance floor</em></span></label>
-          <label class="choice"><input type="radio" name="attending" value="no"><span><b>Regretfully declines</b><em>We will miss you</em></span></label>
-        </div>
-        <small class="err" data-err="attending"></small>
-      </fieldset>
-
-      <div class="attending-only" id="attendingOnly">
-        <div class="field field--split">
-          <div>
-            <label for="party">Guests in your party (including you)</label>
-            <select id="party" name="party">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-          <div>
-            <label for="guests">Names of everyone attending</label>
-            <input id="guests" name="guests" type="text" maxlength="400" placeholder="e.g. Jane Smith, John Smith">
-          </div>
-        </div>
-        <div class="field">
-          <label for="dietary">Dietary restrictions or allergies</label>
-          <textarea id="dietary" name="dietary" rows="2" maxlength="600" placeholder="Vegetarian, gluten free, nut allergy, etc."></textarea>
-        </div>
-        <div class="field">
-          <label for="song">A song that will get you dancing</label>
-          <input id="song" name="song" type="text" maxlength="200" placeholder="Song and artist">
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="message">A note for Laura and Nick</label>
-        <textarea id="message" name="message" rows="3" maxlength="1200" placeholder="Optional"></textarea>
-      </div>
-
-      <div class="hp" aria-hidden="true">
-        <label for="website">Website</label>
-        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
-      </div>
-
-      <div class="rsvp__actions">
-        <button class="btn btn--primary btn--lg" type="submit" id="rsvpSubmit">Send RSVP</button>
-        <p class="form-msg" id="formMsg" role="status"></p>
-      </div>
-      <p class="muted small rsvp__fallback">Trouble with the form? <a id="rsvpFallback" href="#rsvp" target="_blank" rel="noopener">Open the backup RSVP form</a>.</p>
-    </form>
-
-    <div class="rsvp-done" id="rsvpDone" hidden>
-      <div class="rsvp-done__icon" aria-hidden="true">&#10047;</div>
-      <h3 id="doneTitle">Thank you!</h3>
-      <p id="doneText"></p>
-      <p class="muted small">Need to change something? Just send a new reply with the same name and we will use the latest one.</p>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <footer class="footer">
-  <div class="footer__names">Laura <span>&amp;</span> Nick</div>
+  <div class="footer__names">Nick <span>&amp;</span> Laura</div>
   <p>August 8, 2027 &middot; Concord, Ontario</p>
   <p class="footer__links"><a href="#rsvp">RSVP</a> &middot; <a href="#faq">Q&amp;A</a></p>
   <p class="footer__small">thecarpicos.com</p>
 </footer>
 
-<script src="/app.js?v=5" defer></script>
+<script src="/app.js?v=7" defer></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* Laura & Nick, thecarpicos.com */
+/* Nick & Laura, thecarpicos.com */
 :root {
   --plum: #59363E;
   --plum-deep: #2F1416;
@@ -203,6 +203,12 @@ strong { font-weight: 500; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--plum); box-shadow: 0 0 0 3px rgba(89, 54, 62, 0.12); }
 .field textarea { resize: vertical; }
 .field--split { display: grid; grid-template-columns: 180px 1fr; gap: 1rem; }
+.field--narrow select { max-width: 260px; }
+.hint { display: block; color: var(--muted); font-size: .9rem; margin-top: .4rem; }
+.guest-names { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 1rem; padding: 1rem 1.1rem .2rem; margin-bottom: 1.3rem; background: var(--blush); border-radius: 6px; }
+.guest-names .field { margin-bottom: 1rem; }
+.guest-names[hidden] { display: none; }
+@media (max-width: 600px) { .guest-names { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .field--split { grid-template-columns: 1fr; } }
 .choices { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
 @media (max-width: 600px) { .choices { grid-template-columns: 1fr; } }
@@ -213,7 +219,7 @@ strong { font-weight: 500; }
 .choice em { display: block; font-style: italic; color: var(--muted); font-size: .95rem; }
 .choice input:checked + span { border-color: var(--plum); background: var(--blush); }
 .choice input:focus-visible + span { box-shadow: 0 0 0 3px rgba(89, 54, 62, 0.18); }
-.attending-only { overflow: hidden; transition: opacity .3s; }
+.attending-only { transition: opacity .3s; }
 .attending-only[hidden] { display: none; }
 .err { display: block; color: #9B3B4A; font-size: .9rem; margin-top: .35rem; min-height: 0; }
 .field.has-error input, .field.has-error textarea, .field.has-error select { border-color: #9B3B4A; }
