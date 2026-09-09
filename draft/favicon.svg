@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="32" fill="#F5EBED"/>
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#59363E" stroke-width="1.5"/>
+  <text x="32" y="40" text-anchor="middle" font-family="Cinzel, Georgia, 'Times New Roman', serif" font-size="22" fill="#59363E" letter-spacing="1">L&amp;N</text>
+</svg>
