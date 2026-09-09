@@ -87,14 +87,16 @@
     var late = false; try { late = performance.now() > 3000; } catch (e) {}
     if (!curtain || reduce || late) { if (curtain) curtain.hidden = true; open(); return; }
     root.classList.add('is-curtained');
+    root.classList.add('js-curtain'); // tells the CSS that JS owns the curtain (the no-JS safety timer must not hide it)
     var quick = false;
     try { quick = sessionStorage.getItem('carpicos-seen') === '1'; sessionStorage.setItem('carpicos-seen', '1'); } catch (e) {}
     if (quick) curtain.classList.add('is-quick');
-    var timer = setTimeout(open, quick ? 950 : 2250);
-    curtain.addEventListener('click', function () { clearTimeout(timer); open(); });
+    // The curtain never lifts on its own: guests tap, click, or press a key to enter.
+    curtain.addEventListener('click', open);
+    curtain.addEventListener('touchend', function (e) { e.preventDefault(); open(); }, { passive: false });
     doc.addEventListener('keydown', function (e) {
       if (curtainOpened) return;
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { clearTimeout(timer); open(); }
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); open(); }
     });
   })();
 

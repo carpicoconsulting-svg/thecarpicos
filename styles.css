@@ -103,7 +103,8 @@ html.motion-paused .hero__scroll span { animation-play-state: paused; }
 html.motion-paused .ambient i, html.motion-paused .hero__toile, html.motion-paused .photo-band__toile { will-change: auto; }
 
 /* ---------- Page-load curtain ---------- */
-.curtain { position: fixed; inset: 0; z-index: 200; cursor: pointer; animation: curtainSafety 0s 5.5s forwards; }
+.curtain { position: fixed; inset: 0; z-index: 200; cursor: pointer; }
+html:not(.js-curtain) .curtain { animation: curtainSafety 0s 5.5s forwards; } /* only if JS never took over */
 .curtain.is-open { pointer-events: none; }
 @keyframes curtainSafety { to { visibility: hidden; } }
 .curtain__panel { position: absolute; inset: 0; will-change: transform; transition: transform 1.05s cubic-bezier(.77, 0, .18, 1); }
@@ -117,8 +118,10 @@ html.motion-paused .ambient i, html.motion-paused .hero__toile, html.motion-paus
 .curtain__skip {
   position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%); margin: 0;
   font-family: var(--font-display); font-size: .64rem; letter-spacing: .34em; text-transform: uppercase;
-  color: rgba(252, 249, 247, .55); opacity: 0; animation: fadeIn .9s 1.3s ease forwards;
+  color: rgba(252, 249, 247, .85); opacity: 0; animation: fadeIn .9s 1.3s ease forwards, enterPulse 2.4s 2.2s ease-in-out infinite;
+  padding: .7rem 1.4rem; border: 1px solid rgba(252, 249, 247, .35); border-radius: 999px; white-space: nowrap;
 }
+@keyframes enterPulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 @keyframes fadeIn { to { opacity: 1; } }
 
 /* Monogram line drawing (pathLength="1" on every stroke so the dash math is uniform) */
