@@ -6,23 +6,51 @@
 <title>Nick &amp; Laura | August 8, 2027 | The Carpicos</title>
 <meta name="description" content="Nick and Laura are getting married on Sunday, August 8, 2027 at Paradise Banquet &amp; Convention Centre in Concord, Ontario. Find the details, Q&amp;A, and RSVP.">
 <link rel="canonical" href="https://thecarpicos.com/">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nick &amp; Laura | August 8, 2027">
 <meta property="og:description" content="We're getting married! Details, Q&amp;A, and RSVP for our wedding in Concord, Ontario.">
 <meta property="og:url" content="https://thecarpicos.com/">
-<meta property="og:image" content="https://thecarpicos.com/og.jpg">
+<meta property="og:image" content="https://thecarpicos.com/couple.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#59363E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css?v=7">
+<link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Event","name":"Nick & Laura's Wedding","startDate":"2027-08-08T17:00:00-04:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"Paradise Banquet & Convention Centre","address":{"@type":"PostalAddress","streetAddress":"7601 Jane Street","addressLocality":"Concord","addressRegion":"ON","postalCode":"L4K 1X2","addressCountry":"CA"}},"url":"https://thecarpicos.com/"}
 </script>
 </head>
 <body>
+
+<!-- Page-load curtain: plum front panel with a line-drawn monogram, rose back panel. Skippable by click or key. -->
+<div class="curtain" id="curtain" aria-hidden="true">
+  <div class="curtain__panel curtain__panel--back"></div>
+  <div class="curtain__panel curtain__panel--front">
+    <svg class="mono curtain__mono" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+      <circle class="mono__ring" cx="100" cy="100" r="92" pathLength="1"/>
+      <circle class="mono__ring mono__ring--in" cx="100" cy="100" r="84" stroke-width=".7" pathLength="1"/>
+      <path class="mono__letter" d="M50 130 V70 L82 130 V70" stroke-width="2.2" pathLength="1"/>
+      <path class="mono__letter" d="M118 70 V130 H150" stroke-width="2.2" pathLength="1"/>
+      <path class="mono__serif" d="M44 70 H56 M76 70 H88 M44 130 H56 M112 70 H124 M150 124 V130" stroke-width="1.6" pathLength="1"/>
+      <path class="mono__leaf" d="M62 156 C 74 148, 88 146, 100 150" pathLength="1"/>
+      <path class="mono__leaf" d="M138 156 C 126 148, 112 146, 100 150" pathLength="1"/>
+      <path class="mono__leaf" d="M72 152 c 1 -8 8 -12 15 -9 c -3 6 -9 9 -15 9 z" pathLength="1"/>
+      <path class="mono__leaf" d="M86 149 c 2 -7 9 -10 15 -7 c -4 5 -10 8 -15 7 z" pathLength="1"/>
+      <path class="mono__leaf" d="M128 152 c -1 -8 -8 -12 -15 -9 c 3 6 9 9 15 9 z" pathLength="1"/>
+      <path class="mono__leaf" d="M114 149 c -2 -7 -9 -10 -15 -7 c 4 5 10 8 15 7 z" pathLength="1"/>
+      <text class="mono__amp" x="100" y="116" text-anchor="middle" fill="currentColor" stroke="none" font-family="'Cormorant Garamond', Garamond, Georgia, serif" font-style="italic" font-size="44">&amp;</text>
+      <text class="mono__year" x="100" y="52" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cinzel, Georgia, serif" font-size="9" letter-spacing="3">MMXXVII</text>
+    </svg>
+    <p class="curtain__skip">Tap to enter</p>
+  </div>
+</div>
+
+<!-- Ambient gradient drift (behind everything) and the effects canvas (petals, sparkles, hearts; above content, below nav) -->
+<div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
+<canvas class="fx" id="fx" aria-hidden="true"></canvas>
 
 <a class="skip" href="#day">Skip to content</a>
 
@@ -40,19 +68,23 @@
 </nav>
 
 <header class="hero" id="welcome">
-  <div class="hero__inner">
-    <p class="eyebrow">Together with their families</p>
-    <h1 class="hero__names">Nick <span class="amp">&amp;</span> Laura</h1>
-    <p class="hero__sub">are getting married</p>
-    <div class="hero__rule" aria-hidden="true"><span></span><i>8 . 8 . 2027</i><span></span></div>
-    <p class="hero__date">Sunday, August 8, 2027</p>
-    <p class="hero__venue">Paradise Banquet &amp; Convention Centre <br class="br-sm">Concord, Ontario</p>
+  <div class="hero__toile hero__toile--a" aria-hidden="true"></div>
+  <div class="hero__toile hero__toile--b" aria-hidden="true"></div>
+  <div class="hero__toile hero__toile--c" aria-hidden="true"></div>
+  <div class="hero__inner" id="heroInner">
+    <p class="eyebrow" data-hero>Together with their families</p>
+    <h1 class="hero__names" id="heroNames"><span class="word">Nick</span> <span class="amp">&amp;</span> <span class="word">Laura</span></h1>
+    <p class="hero__sub" data-hero>are getting married</p>
+    <div class="hero__rule" aria-hidden="true" data-hero><span></span><i class="shimmer">8 . 8 . 2027</i><span></span></div>
+    <p class="hero__date" data-hero>Sunday, August 8, 2027</p>
+    <p class="hero__venue" data-hero>Paradise Banquet &amp; Convention Centre <br class="br-sm">Concord, Ontario</p>
     <div class="countdown" id="countdown">
-      <div><b data-cd="days">–</b><span>days</span></div>
-      <div><b data-cd="hours">–</b><span>hours</span></div>
-      <div><b data-cd="minutes">–</b><span>minutes</span></div>
+      <div class="cd-unit"><b class="flip" data-cd="days">000</b><span>days</span></div>
+      <div class="cd-unit"><b class="flip" data-cd="hours">00</b><span>hours</span></div>
+      <div class="cd-unit"><b class="flip" data-cd="minutes">00</b><span>minutes</span></div>
+      <div class="cd-unit"><b class="flip" data-cd="seconds">00</b><span>seconds</span></div>
     </div>
-    <div class="hero__actions">
+    <div class="hero__actions" data-hero>
       <a class="btn btn--primary" href="#rsvp">RSVP</a>
       <a class="btn btn--ghost" href="#day">The Day</a>
     </div>
@@ -60,16 +92,53 @@
   <a class="hero__scroll" href="#day" aria-label="Scroll to the details"><span></span></a>
 </header>
 
+<!-- Framed photo band. couple.jpg is supplied later; the placeholder shows until it exists. -->
+<section class="photo-band" id="photo" aria-labelledby="photoCap">
+  <div class="photo-band__toile" aria-hidden="true"></div>
+  <div class="container photo-band__inner">
+    <figure class="frame" id="frame">
+      <div class="frame__tilt" id="frameTilt">
+        <div class="frame__mat">
+          <div class="frame__inner">
+            <div class="frame__placeholder" aria-hidden="true">
+              <svg class="mono mono--sm" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <circle class="mono__ring" cx="100" cy="100" r="92" pathLength="1"/>
+                <circle class="mono__ring mono__ring--in" cx="100" cy="100" r="84" stroke-width=".7" pathLength="1"/>
+                <path class="mono__letter" d="M50 130 V70 L82 130 V70" stroke-width="2.2" pathLength="1"/>
+                <path class="mono__letter" d="M118 70 V130 H150" stroke-width="2.2" pathLength="1"/>
+                <path class="mono__serif" d="M44 70 H56 M76 70 H88 M44 130 H56 M112 70 H124 M150 124 V130" stroke-width="1.6" pathLength="1"/>
+                <path class="mono__leaf" d="M62 156 C 74 148, 88 146, 100 150" pathLength="1"/>
+                <path class="mono__leaf" d="M138 156 C 126 148, 112 146, 100 150" pathLength="1"/>
+                <path class="mono__leaf" d="M72 152 c 1 -8 8 -12 15 -9 c -3 6 -9 9 -15 9 z" pathLength="1"/>
+                <path class="mono__leaf" d="M86 149 c 2 -7 9 -10 15 -7 c -4 5 -10 8 -15 7 z" pathLength="1"/>
+                <path class="mono__leaf" d="M128 152 c -1 -8 -8 -12 -15 -9 c 3 6 9 9 15 9 z" pathLength="1"/>
+                <path class="mono__leaf" d="M114 149 c -2 -7 -9 -10 -15 -7 c 4 5 10 8 15 7 z" pathLength="1"/>
+                <text class="mono__amp" x="100" y="116" text-anchor="middle" fill="currentColor" stroke="none" font-family="'Cormorant Garamond', Garamond, Georgia, serif" font-style="italic" font-size="44">&amp;</text>
+                <text class="mono__year" x="100" y="52" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cinzel, Georgia, serif" font-size="9" letter-spacing="3">MMXXVII</text>
+              </svg>
+              <span class="frame__soon">Photo coming soon</span>
+            </div>
+            <img class="frame__img" id="coupleImg" src="couple.jpg" alt="Nick and Laura" decoding="async" onload="this.closest('.frame').classList.add('is-loaded')" onerror="this.closest('.frame').classList.add('is-missing')">
+          </div>
+          <div class="frame__glare" aria-hidden="true"></div>
+        </div>
+      </div>
+      <figcaption id="photoCap">Nick <span class="amp">&amp;</span> Laura <i>8 . 8 . 2027</i></figcaption>
+    </figure>
+  </div>
+</section>
+
 <main>
 
 <section class="section section--blush" id="day">
   <div class="container">
-    <div class="section__head">
+    <div class="section__head" data-reveal data-reveal-group>
       <p class="eyebrow">The Day</p>
       <h2>Sunday, August 8, 2027</h2>
+      <div class="ornament" aria-hidden="true"><span></span><i>&#10022;</i><span></span></div>
       <p class="lead">We are celebrating at Paradise Banquet &amp; Convention Centre in Concord, just north of Toronto, from 5:00 PM until 1:00 AM. The ceremony is outdoors and the reception moves inside.</p>
     </div>
-    <div class="cards cards--3">
+    <div class="cards cards--3" data-reveal data-reveal-group>
       <article class="card">
         <div class="card__icon" aria-hidden="true">&#10047;</div>
         <h3>Ceremony</h3>
@@ -89,7 +158,7 @@
         <p>Think suits, gowns, and cocktail dresses. Summer evenings in Vaughan are warm, so light layers are a good idea for the outdoor ceremony.</p>
       </article>
     </div>
-    <div class="venue">
+    <div class="venue" data-reveal>
       <div class="venue__text">
         <h3>Paradise Banquet &amp; Convention Centre</h3>
         <p>7601 Jane Street<br>Concord, Ontario L4K 1X2</p>
@@ -105,13 +174,14 @@
 
 <section class="section section--ivory" id="rsvp">
   <div class="container container--narrow">
-    <div class="section__head center">
+    <div class="section__head center" data-reveal data-reveal-group>
       <p class="eyebrow">RSVP</p>
       <h2>Will you join us?</h2>
+      <div class="ornament" aria-hidden="true"><span></span><i>&#10022;</i><span></span></div>
       <p class="lead">Kindly reply by July 15, 2027. One reply per household is perfect, just list everyone attending from your invitation.</p>
     </div>
 
-    <form class="rsvp" id="rsvpForm" novalidate>
+    <form class="rsvp" id="rsvpForm" novalidate data-reveal data-reveal-group>
       <div class="field">
         <label for="name">Your full name <span class="req">*</span></label>
         <input id="name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder="First and last name">
@@ -183,12 +253,13 @@
 
 <section class="section section--blush" id="faq">
   <div class="container container--narrow">
-    <div class="section__head">
+    <div class="section__head" data-reveal data-reveal-group>
       <p class="eyebrow">Q&amp;A</p>
       <h2>Questions and answers</h2>
+      <div class="ornament" aria-hidden="true"><span></span><i>&#10022;</i><span></span></div>
       <p class="lead">For our friends and family who have questions, please review the answers below.</p>
     </div>
-    <div class="faq">
+    <div class="faq" data-reveal data-reveal-group>
       <details open>
         <summary>What is the RSVP deadline?</summary>
         <p>Please RSVP by <strong>July 15, 2027</strong> so that we can get an accurate headcount. You can reply right here on the site.</p>
@@ -227,13 +298,22 @@
 
 </main>
 
-<footer class="footer">
-  <div class="footer__names">Nick <span>&amp;</span> Laura</div>
+<footer class="footer" data-reveal data-reveal-group>
+  <div class="footer__names shimmer shimmer--light">Nick <span>&amp;</span> Laura</div>
   <p>August 8, 2027 &middot; Concord, Ontario</p>
   <p class="footer__links"><a href="#rsvp">RSVP</a> &middot; <a href="#faq">Q&amp;A</a></p>
   <p class="footer__small">thecarpicos.com</p>
 </footer>
 
-<script src="/app.js?v=7" defer></script>
+<button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false">
+  <svg class="ico-pause" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><rect x="2" y="1.5" width="3" height="9" rx=".6"/><rect x="7" y="1.5" width="3" height="9" rx=".6"/></svg>
+  <svg class="ico-play" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 1.5 L10.5 6 L3 10.5 Z"/></svg>
+  <span>Pause motion</span>
+</button>
+
+<!-- GSAP 3.15.0 (Standard License, free for commercial use since 3.13). If cdnjs is unreachable the page still renders fully; app.js only layers motion on when window.gsap exists. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha384-wl5TeDVvOWt30Pbf8aSo2ZrzsOjddu3avOBvHe+p+OhJt9gP6w9YXmDkN5DK2/dF" crossorigin="anonymous" defer></script>
+<script src="app.js" defer></script>
 </body>
 </html>
