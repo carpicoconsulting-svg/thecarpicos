@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="rsvp-off">
 <head>
+<!-- RSVP is switched OFF for now: remove class="rsvp-off" from the <html> tag above to bring the RSVP back. -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nick &amp; Laura | August 8, 2027 | The Carpicos (Draft)</title>
@@ -19,14 +20,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=20261005">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Event","name":"Nick & Laura's Wedding","startDate":"2027-08-08T17:00:00-04:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"Paradise Banquet & Convention Centre","address":{"@type":"PostalAddress","streetAddress":"7601 Jane Street","addressLocality":"Concord","addressRegion":"ON","postalCode":"L4K 1X2","addressCountry":"CA"}},"url":"https://thecarpicos.com/"}
 </script>
 </head>
 <body>
 
-<!-- Page-load curtain: plum front panel with a line-drawn monogram, rose back panel. Skippable by click or key. -->
+<!-- Page-load curtain: plum front panel with a line-drawn monogram, rose back panel. Lifts only when the guest taps, clicks, or presses a key. -->
 <div class="curtain" id="curtain" aria-hidden="true">
   <div class="curtain__panel curtain__panel--back"></div>
   <div class="curtain__panel curtain__panel--front">
@@ -45,7 +46,7 @@
       <text class="mono__amp" x="100" y="116" text-anchor="middle" fill="currentColor" stroke="none" font-family="'Cormorant Garamond', Garamond, Georgia, serif" font-style="italic" font-size="44">&amp;</text>
       <text class="mono__year" x="100" y="52" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cinzel, Georgia, serif" font-size="9" letter-spacing="3">MMXXVII</text>
     </svg>
-    <p class="curtain__skip">Tap to enter</p>
+    <p class="curtain__skip">Tap or click to enter</p>
   </div>
 </div>
 
@@ -64,7 +65,7 @@
   <ul class="nav__links" id="navLinks">
     <li><a href="#welcome">Welcome</a></li>
     <li><a href="#day">The Day</a></li>
-    <li><a class="nav__cta" href="#rsvp">RSVP</a></li>
+    <li class="rsvp-only"><a class="nav__cta" href="#rsvp">RSVP</a></li>
     <li><a href="#faq">Q&amp;A</a></li>
   </ul>
 </nav>
@@ -87,7 +88,7 @@
       <div class="cd-unit"><b class="flip" data-cd="seconds">00</b><span>seconds</span></div>
     </div>
     <div class="hero__actions" data-hero>
-      <a class="btn btn--primary" href="#rsvp">RSVP</a>
+      <a class="btn btn--primary rsvp-only" href="#rsvp">RSVP</a>
       <a class="btn btn--ghost" href="#day">The Day</a>
     </div>
   </div>
@@ -264,7 +265,7 @@
     <div class="faq" data-reveal data-reveal-group>
       <details open>
         <summary>What is the RSVP deadline?</summary>
-        <p>Please RSVP by <strong>July 15, 2027</strong> so that we can get an accurate headcount. You can reply right here on the site.</p>
+        <p>Please RSVP by <strong>July 15, 2027</strong> so that we can get an accurate headcount. <span class="rsvp-only">You can reply right here on the site.</span><span class="rsvp-closed-only">The RSVP will open here on the site at a later date.</span></p>
       </details>
       <details>
         <summary>Can I bring a plus one?</summary>
@@ -292,7 +293,7 @@
       </details>
       <details>
         <summary>Who should I contact if I have questions?</summary>
-        <p>Call or text us at <a href="tel:+14168269078">416-826-9078</a>, or send us a note in the message box when you RSVP and we will get back to you.</p>
+        <p>Call or text us at <a href="tel:+14168269078">416-826-9078</a><span class="rsvp-only">, or send us a note in the message box when you RSVP</span> and we will get back to you.</p>
       </details>
     </div>
   </div>
@@ -303,9 +304,21 @@
 <footer class="footer" data-reveal data-reveal-group>
   <div class="footer__names shimmer shimmer--light">Nick <span>&amp;</span> Laura</div>
   <p>August 8, 2027 &middot; Concord, Ontario</p>
-  <p class="footer__links"><a href="#rsvp">RSVP</a> &middot; <a href="#faq">Q&amp;A</a></p>
+  <p class="footer__links"><span class="rsvp-only"><a href="#rsvp">RSVP</a> &middot; </span><a href="#faq">Q&amp;A</a></p>
   <p class="footer__small">thecarpicos.com</p>
+  <p class="footer__secret-wrap"><button type="button" class="footer__secret" id="secretBtn">secret</button></p>
 </footer>
+
+<!-- Secret: opens only when the tiny "secret" word in the footer is clicked. The GIFs and music load on that click, never before. -->
+<div class="secret" id="secret" role="dialog" aria-modal="true" aria-label="Secret dance party" aria-hidden="true" hidden>
+  <div class="secret__stage">
+    <img class="secret__gif" alt="A dancing baby" width="472" height="480" data-src="https://media.tenor.com/f6oxXKAdyK0AAAAi/baby-dancing.gif" data-src-small="https://media.tenor.com/f6oxXKAdyK0AAAAj/baby-dancing.gif">
+    <img class="secret__gif" alt="A slow dancing baby" width="302" height="350" data-src="https://media.tenor.com/KcUCr-9oNkkAAAAC/slow-dancing-baby.gif" data-src-small="https://media.tenor.com/KcUCr-9oNkkAAAAd/slow-dancing-baby.gif">
+  </div>
+  <canvas class="secret__confetti" id="secretConfetti" aria-hidden="true"></canvas>
+  <button type="button" class="secret__close" id="secretClose" aria-label="Close">&times;</button>
+  <div class="secret__timer" aria-hidden="true"><i></i></div>
+</div>
 
 <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false">
   <svg class="ico-pause" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><rect x="2" y="1.5" width="3" height="9" rx=".6"/><rect x="7" y="1.5" width="3" height="9" rx=".6"/></svg>
@@ -316,6 +329,6 @@
 <!-- GSAP 3.15.0 (Standard License, free for commercial use since 3.13). If cdnjs is unreachable the page still renders fully; app.js only layers motion on when window.gsap exists. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" crossorigin="anonymous" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha384-wl5TeDVvOWt30Pbf8aSo2ZrzsOjddu3avOBvHe+p+OhJt9gP6w9YXmDkN5DK2/dF" crossorigin="anonymous" defer></script>
-<script src="app.js" defer></script>
+<script src="app.js?v=20261005" defer></script>
 </body>
 </html>

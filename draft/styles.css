@@ -103,7 +103,8 @@ html.motion-paused .hero__scroll span { animation-play-state: paused; }
 html.motion-paused .ambient i, html.motion-paused .hero__toile, html.motion-paused .photo-band__toile { will-change: auto; }
 
 /* ---------- Page-load curtain ---------- */
-.curtain { position: fixed; inset: 0; z-index: 200; cursor: pointer; animation: curtainSafety 0s 5.5s forwards; }
+.curtain { position: fixed; inset: 0; z-index: 200; cursor: pointer; }
+html:not(.js-curtain) .curtain { animation: curtainSafety 0s 5.5s forwards; } /* only if JS never took over */
 .curtain.is-open { pointer-events: none; }
 @keyframes curtainSafety { to { visibility: hidden; } }
 .curtain__panel { position: absolute; inset: 0; will-change: transform; transition: transform 1.05s cubic-bezier(.77, 0, .18, 1); }
@@ -117,8 +118,10 @@ html.motion-paused .ambient i, html.motion-paused .hero__toile, html.motion-paus
 .curtain__skip {
   position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%); margin: 0;
   font-family: var(--font-display); font-size: .64rem; letter-spacing: .34em; text-transform: uppercase;
-  color: rgba(252, 249, 247, .55); opacity: 0; animation: fadeIn .9s 1.3s ease forwards;
+  color: rgba(252, 249, 247, .85); opacity: 1; animation: enterPulse 2.4s 2.2s ease-in-out infinite;
+  padding: .7rem 1.4rem; border: 1px solid rgba(252, 249, 247, .35); border-radius: 999px; white-space: nowrap;
 }
+@keyframes enterPulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 @keyframes fadeIn { to { opacity: 1; } }
 
 /* Monogram line drawing (pathLength="1" on every stroke so the dash math is uniform) */
@@ -426,4 +429,47 @@ main, .footer { position: relative; z-index: 1; }
     opacity: 1 !important; transform: none !important; visibility: visible !important;
   }
   .frame .mono [pathLength] { stroke-dashoffset: 0 !important; }
+}
+
+/* ---------- RSVP switch ---------- */
+/* The RSVP is switched OFF by the "rsvp-off" class on the <html> tag in index.html. Remove that class to bring back
+   the RSVP section, the nav link, the hero button and the original Q&A wording. */
+html.rsvp-off #rsvp, html.rsvp-off .rsvp-only { display: none !important; }
+html:not(.rsvp-off) .rsvp-closed-only { display: none !important; }
+
+/* ---------- Secret (footer easter egg): hidden until the tiny footer word is clicked ---------- */
+.footer__secret-wrap { margin: 1.1rem 0 0; line-height: 1; }
+.footer__secret {
+  -webkit-appearance: none; appearance: none; background: none; border: 0; margin: 0; padding: .2rem .4rem; cursor: pointer;
+  font-family: var(--font-serif); font-style: italic; font-size: .62rem; letter-spacing: .12em; text-transform: lowercase;
+  color: rgba(252, 249, 247, .4); transition: color .3s ease;
+}
+.footer__secret:hover, .footer__secret:focus-visible { color: rgba(252, 249, 247, .85); }
+html.is-secret { overflow: hidden; }
+.secret {
+  position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 1.2rem;
+  background: rgba(47, 20, 22, .96); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; transition: opacity .4s ease;
+}
+.secret.is-open { opacity: 1; }
+.secret__stage { position: relative; display: flex; align-items: center; justify-content: center; gap: clamp(.8rem, 3vw, 2.4rem); max-width: 100%; }
+.secret__gif {
+  display: block; flex: none; width: auto; height: min(62vh, 44vw); max-width: 46vw; object-fit: contain; border-radius: 10px;
+  background: #fff; box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .6);
+  transform: scale(.12) rotate(-8deg); opacity: 0;
+  transition: transform .75s cubic-bezier(.34, 1.56, .64, 1), opacity .3s ease;
+}
+.secret__gif:nth-child(2) { transform: scale(.12) rotate(8deg); transition-delay: .12s; }
+.secret.is-open .secret__gif { transform: none; opacity: 1; }
+.secret__confetti { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.secret__close {
+  position: absolute; top: 1rem; right: 1rem; z-index: 2; width: 2.6rem; height: 2.6rem; border-radius: 50%; cursor: pointer;
+  border: 1px solid rgba(252, 249, 247, .4); background: rgba(47, 20, 22, .55); color: var(--ivory); font-size: 1.4rem; line-height: 1;
+}
+.secret__timer { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(252, 249, 247, .12); }
+.secret__timer i { display: block; height: 100%; background: linear-gradient(90deg, var(--rose), var(--gold-light)); transform-origin: 0 50%; }
+.secret.is-open .secret__timer i { animation: secretTimer 10s linear forwards; }
+@keyframes secretTimer { to { transform: scaleX(0); } }
+@media (max-aspect-ratio: 1/1) {
+  .secret__stage { flex-direction: column; }
+  .secret__gif { height: min(38vh, 80vw); max-width: 86vw; }
 }

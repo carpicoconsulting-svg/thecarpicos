@@ -87,14 +87,16 @@
     var late = false; try { late = performance.now() > 3000; } catch (e) {}
     if (!curtain || reduce || late) { if (curtain) curtain.hidden = true; open(); return; }
     root.classList.add('is-curtained');
+    root.classList.add('js-curtain'); // tells the CSS that JS owns the curtain (the no-JS safety timer must not hide it)
     var quick = false;
     try { quick = sessionStorage.getItem('carpicos-seen') === '1'; sessionStorage.setItem('carpicos-seen', '1'); } catch (e) {}
     if (quick) curtain.classList.add('is-quick');
-    var timer = setTimeout(open, quick ? 950 : 2250);
-    curtain.addEventListener('click', function () { clearTimeout(timer); open(); });
+    // The curtain never lifts on its own: guests tap, click, or press a key to enter.
+    curtain.addEventListener('click', open);
+    curtain.addEventListener('touchend', function (e) { e.preventDefault(); open(); }, { passive: false });
     doc.addEventListener('keydown', function (e) {
       if (curtainOpened) return;
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { clearTimeout(timer); open(); }
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); open(); }
     });
   })();
 
@@ -395,6 +397,190 @@
   motionHandlers.push(function (p) { parallax.forEach(function (st) { if (p) st.disable(true); else st.enable(); }); });
 
   setPaused(paused, false);
+
+  // ---- Secret (footer easter egg) ----
+  // Opens ONLY on a genuine click or tap of the tiny "secret" button in the footer. Nothing is fetched, drawn or
+  // played before that click: the GIFs have no src until then and the music is synthesised on the spot.
+  (function () {
+    var btn = $('#secretBtn'), box = $('#secret');
+    if (!btn || !box) return;
+    var SHOW_MS = 10000; // the party lasts ten seconds, then closes by itself
+    var imgs = $$('.secret__gif', box), canvas = $('#secretConfetti'), closeBtn = $('#secretClose');
+    var isOpen = false, timer = null, hideTimer = null, stopConfetti = null, music = null, lastFocus = null;
+
+    function midi(n) { return 440 * Math.pow(2, (n - 69) / 12); }
+
+    // Ten seconds of 120 BPM party music built with the Web Audio API (five bars: C, G, A minor, F, C).
+    // No audio file is involved, so there is nothing to download and nothing copyrighted.
+    function buildSong(ctx, out, t0) {
+      var beat = 0.5, bars = 5, len = Math.floor(ctx.sampleRate * 0.25);
+      var nb = ctx.createBuffer(1, len, ctx.sampleRate), nd = nb.getChannelData(0);
+      for (var i = 0; i < len; i++) nd[i] = Math.random() * 2 - 1;
+      function env(g, t, peak, dur) {
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(peak, t + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      }
+      function tone(type, freq, t, dur, peak, cutoff) {
+        var o = ctx.createOscillator(), g = ctx.createGain(), node = o;
+        o.type = type; o.frequency.setValueAtTime(freq, t);
+        if (cutoff) { var f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = cutoff; o.connect(f); node = f; }
+        node.connect(g); g.connect(out); env(g, t, peak, dur);
+        o.start(t); o.stop(t + dur + 0.05);
+      }
+      function noise(t, dur, peak, type, freq) {
+        var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+        s.buffer = nb; f.type = type; f.frequency.value = freq;
+        s.connect(f); f.connect(g); g.connect(out); env(g, t, peak, dur);
+        s.start(t); s.stop(t + dur + 0.05);
+      }
+      function kick(t) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = 'sine'; o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(48, t + 0.13);
+        g.gain.setValueAtTime(0.9, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.24);
+        o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.3);
+      }
+      var roots = [48, 43, 45, 41, 48];
+      var chords = [[60, 64, 67], [59, 62, 67], [60, 64, 69], [60, 65, 69], [60, 64, 67]];
+      var lead = [
+        [76, 79, 84, 79, 81, 79, 76, 79],
+        [74, 79, 83, 79, 86, 83, 79, 74],
+        [72, 76, 81, 76, 84, 81, 76, 72],
+        [77, 81, 84, 81, 77, 81, 79, 76],
+        [84, 79, 76, 72, 84, 0, 0, 0]
+      ];
+      for (var b = 0; b < bars; b++) {
+        var bt = t0 + b * 4 * beat, lastBar = b === bars - 1;
+        for (var q = 0; q < 4; q++) {
+          var t = bt + q * beat, off = t + beat / 2;
+          kick(t);
+          if (q === 1 || q === 3) noise(t, 0.16, 0.34, 'bandpass', 1800);   // clap on two and four
+          noise(off, 0.05, 0.12, 'highpass', 7000);                         // off-beat hat
+          tone('sawtooth', midi(roots[b]), t, 0.2, 0.3, 420);               // bass on the beat
+          tone('sawtooth', midi(roots[b] + 12), off, 0.16, 0.22, 520);      // octave bounce
+          if (!(lastBar && q > 1)) {
+            for (var n = 0; n < 3; n++) tone('triangle', midi(chords[b][n]), off, 0.2, 0.07);
+          }
+        }
+        for (var k = 0; k < 8; k++) {
+          if (!lead[b][k]) continue;
+          tone('square', midi(lead[b][k]), bt + k * beat / 2, (lastBar && k === 4) ? 0.9 : 0.22, 0.075, 2600);
+        }
+      }
+      return bars * 4 * beat;
+    }
+
+    function startMusic() {
+      var AC = win.AudioContext || win.webkitAudioContext;
+      if (!AC) return null;
+      var ctx;
+      try { ctx = new AC(); } catch (e) { return null; }
+      var master = ctx.createGain(), comp = ctx.createDynamicsCompressor();
+      master.connect(comp); comp.connect(ctx.destination);
+      var t0 = ctx.currentTime + 0.08;
+      master.gain.setValueAtTime(0.7, t0);
+      var secs = buildSong(ctx, master, t0);
+      master.gain.setValueAtTime(0.7, t0 + secs - 0.7);
+      master.gain.exponentialRampToValueAtTime(0.0001, t0 + secs);
+      if (ctx.resume) { var p = ctx.resume(); if (p && p.catch) p.catch(function () {}); }
+      return {
+        stop: function () {
+          try {
+            var now = ctx.currentTime;
+            master.gain.cancelScheduledValues(now);
+            master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), now);
+            master.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+          } catch (e) {}
+          setTimeout(function () { try { ctx.close(); } catch (e) {} }, 320);
+        }
+      };
+    }
+
+    function startConfetti() {
+      if (!canvas || !canvas.getContext) return null;
+      var c = canvas.getContext('2d'), dpr = Math.min(win.devicePixelRatio || 1, 2), W = 0, H = 0, raf = 0, alive = true;
+      var colors = ['#C9A961', '#EDDCAA', '#E7CBD2', '#C9A0AA', '#FCF9F7', '#F5EBED', '#E58FA6', '#B8860B'];
+      var pieces = [], began = 0, last = 0;
+      function size() {
+        W = canvas.clientWidth; H = canvas.clientHeight;
+        canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+        c.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function make(spread) {
+        return {
+          x: Math.random() * W, y: -20 - Math.random() * H * spread,
+          w: 6 + Math.random() * 7, h: 9 + Math.random() * 9,
+          vx: -45 + Math.random() * 90, vy: 120 + Math.random() * 190,
+          rot: Math.random() * 6.283, vr: -7 + Math.random() * 14,
+          flip: Math.random() * 6.283, vf: 3 + Math.random() * 5,
+          color: colors[(Math.random() * colors.length) | 0], round: Math.random() < 0.22
+        };
+      }
+      size();
+      var max = W < 720 ? 110 : 210;
+      for (var i = 0; i < max; i++) pieces.push(make(1));
+      win.addEventListener('resize', size);
+      function frame(now) {
+        if (!alive) return;
+        if (!began) { began = now; last = now; }
+        var dt = Math.min(0.05, (now - last) / 1000), refill = (now - began) < SHOW_MS - 2400;
+        last = now;
+        c.clearRect(0, 0, W, H);
+        for (var k = pieces.length - 1; k >= 0; k--) {
+          var p = pieces[k];
+          p.flip += p.vf * dt; p.rot += p.vr * dt;
+          p.x += (p.vx + Math.sin(p.flip) * 35) * dt; p.y += p.vy * dt;
+          if (p.y > H + 30) { if (refill) pieces[k] = make(0.15); else pieces.splice(k, 1); continue; }
+          c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.scale(1, Math.cos(p.flip));
+          c.fillStyle = p.color;
+          if (p.round) { c.beginPath(); c.arc(0, 0, p.w / 2, 0, 6.283); c.fill(); } else c.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          c.restore();
+        }
+        raf = win.requestAnimationFrame(frame);
+      }
+      raf = win.requestAnimationFrame(frame);
+      return function () { alive = false; win.cancelAnimationFrame(raf); win.removeEventListener('resize', size); c.clearRect(0, 0, W, H); };
+    }
+
+    function close() {
+      if (!isOpen) return;
+      isOpen = false;
+      clearTimeout(timer);
+      if (music) { music.stop(); music = null; }
+      box.classList.remove('is-open');
+      root.classList.remove('is-secret');
+      hideTimer = setTimeout(function () {
+        if (stopConfetti) { stopConfetti(); stopConfetti = null; }
+        box.hidden = true; box.setAttribute('aria-hidden', 'true');
+        imgs.forEach(function (im) { im.removeAttribute('src'); });
+      }, 450);
+      if (lastFocus && lastFocus.focus) { try { lastFocus.focus({ preventScroll: true }); } catch (e) {} }
+    }
+
+    function open() {
+      if (isOpen) return;
+      isOpen = true;
+      clearTimeout(hideTimer);
+      if (stopConfetti) { stopConfetti(); stopConfetti = null; }
+      lastFocus = doc.activeElement;
+      var pick = win.innerWidth < 720 ? 'data-src-small' : 'data-src'; // lighter files on phones
+      imgs.forEach(function (im) { im.src = im.getAttribute(pick) || im.getAttribute('data-src'); });
+      box.hidden = false; box.setAttribute('aria-hidden', 'false');
+      root.classList.add('is-secret');
+      void box.offsetWidth; // let the browser register the starting state so the GIFs grow in
+      box.classList.add('is-open');
+      if (!reduce) stopConfetti = startConfetti();
+      music = startMusic();
+      timer = setTimeout(close, SHOW_MS);
+      if (closeBtn) { try { closeBtn.focus({ preventScroll: true }); } catch (e) {} }
+    }
+
+    // The one and only trigger. isTrusted is false for script-made clicks, so only a person can set this off.
+    btn.addEventListener('click', function (e) { if (!e.isTrusted) return; open(); });
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+    doc.addEventListener('keydown', function (e) { if (isOpen && e.key === 'Escape') close(); });
+  })();
 
   // ---- RSVP (posts straight to a Google Form owned by Nick and Laura; responses land in their Google Sheet) ----
   var FORM = {
