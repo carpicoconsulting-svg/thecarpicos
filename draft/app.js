@@ -400,7 +400,7 @@
 
   // ---- Secret (footer easter egg) ----
   // Opens ONLY on a genuine click or tap of the tiny "secret" button in the footer. Nothing is fetched, drawn or
-  // played before that click: the GIFs have no src until then and the music is synthesised on the spot.
+  // played before that click: the GIF has no src until then and the music is synthesised on the spot.
   (function () {
     var btn = $('#secretBtn'), box = $('#secret');
     if (!btn || !box) return;
@@ -563,11 +563,17 @@
       clearTimeout(hideTimer);
       if (stopConfetti) { stopConfetti(); stopConfetti = null; }
       lastFocus = doc.activeElement;
-      var pick = win.innerWidth < 720 ? 'data-src-small' : 'data-src'; // lighter files on phones
-      imgs.forEach(function (im) { im.src = im.getAttribute(pick) || im.getAttribute('data-src'); });
+      // one GIF now, so phones get the sharp full-size file too; the small one only on data-saver or 2G/3G
+      var conn = win.navigator && win.navigator.connection || {};
+      var slow = !!conn.saveData || /^(slow-)?[23]g$/.test(conn.effectiveType || '');
+      var pick = slow ? 'data-src-small' : 'data-src';
+      imgs.forEach(function (im) {
+        im.classList.toggle('is-small', slow);
+        im.src = im.getAttribute(pick) || im.getAttribute('data-src');
+      });
       box.hidden = false; box.setAttribute('aria-hidden', 'false');
       root.classList.add('is-secret');
-      void box.offsetWidth; // let the browser register the starting state so the GIFs grow in
+      void box.offsetWidth; // let the browser register the starting state so the GIF grows in
       box.classList.add('is-open');
       if (!reduce) stopConfetti = startConfetti();
       music = startMusic();
